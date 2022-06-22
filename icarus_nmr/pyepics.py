@@ -17,6 +17,7 @@ class PVImage(wx.StaticBitmap, PVMixin):
                  minor_alarm="DARKRED", major_alarm="RED",
                  invalid_alarm="ORANGERED", **kw):
         self.im_size = im_size
+        self.im_size_show = im_size_show
         wstyle = wx.ALIGN_LEFT
         if style is not None:
             wstyle = style
@@ -46,7 +47,8 @@ class PVImage(wx.StaticBitmap, PVMixin):
             width, height = img.size
             bit_img = wx.Bitmap.FromBuffer(width, height, img.tobytes())
             image = wx.Bitmap.ConvertToImage(bit_img)
-            image = image.Scale(im_size_show[0], im_size_show[1], wx.IMAGE_QUALITY_HIGH)
+            if im_size_show is not None:
+                image = image.Scale(im_size_show[0], im_size_show[1], wx.IMAGE_QUALITY_HIGH)
             bit_img = wx.Bitmap(image)
             t1 = time()
             self.SetBitmap(bit_img)
